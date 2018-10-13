@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:CatKit.xcodeproj">
+      location = "self:CatKitNew.xcodeproj">
    </FileRef>
 </Workspace>

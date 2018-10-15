@@ -6,26 +6,24 @@ The application uses Carthage for building library dependencies. If you are not 
 
 * Install the pact mock service gem (required for running the iOS Pact tests).
 ```
-gem install pact-mock_service -v 0.9.0
+CatKitNew $ bundle install
 ```
-*NB:* if you are using the system ruby, you will need to install the gem using sudo. Better options would be to use something like rbenv / rvm / chruby.
 
-* Download and compile the iOS library dependencies:
-```
-CatKit $ carthage bootstrap --no-use-binaries  --platform iOS
-```
 (Execute from the CatKit directory)
 
 * Run the iOS unit tests. (can be done from within XCode if you prefer)
 ```
-CatKit $ xcodebuild -project CatKit.xcodeproj -scheme CatKit clean test -sdk iphonesimulator
+CatKitNew $ bundle exec pact-mock-service start --pact-specification-version 2.0.0 --log "tmp/pact.log" --pact-dir "tmp/pacts" -p 1234
+CatKitNew $ export SIMULATOR_ID=$(xcrun instruments -s | grep -o "iPhone X (12.0) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
+CatKitNew $ xcodebuild -workspace CatKitNew.xcworkspace -scheme CatKitNew -destination "platform=iOS Simulator,id=$SIMULATOR_ID" clean test
+CatKitNew $ bundle exec pact-mock-service stop
 ```
-This will run the unit tests (Pact Tests). After the pact tests run successfully the generated pact files should live in the `CatKit/tmp/pacts/` directory. A log of the pact test interactions can be found here `CatKit/tmp/pact.log`. If the tests fail, try looking in here for details as to why.
+This will run the unit tests (Pact Tests). After the pact tests run successfully the generated pact files should live in the `CatKitNew/tmp/pacts/` directory. A log of the pact test interactions can be found here `CatKitNew/tmp/pact.log`. If the tests fail, try looking in here for details as to why.
 
 ### Verify the ruby server with the generated pact file
 Copy over the generated pact file from the iOS project, to the ruby server.
 ```
-catkit-server $ cp ../CatKit/tmp/pacts/catkit_ios_app-catkit_service.json pacts/ios-app/
+catkit-server $ cp ../CatKitNew/tmp/pacts/catkit_ios_app-catkit_service.json pacts/ios-app/
 ```
 (Execute from the catkit-server directory)
 

@@ -1,0 +1,18 @@
+platform :ios, '12.0'
+
+project 'CatKitNew.xcodeproj'
+
+target 'CatKitNew' do
+  use_frameworks!
+
+  inhibit_all_warnings!
+
+  pod 'Alamofire'
+
+  target 'CatKitNewTests' do
+    inherit! :search_paths
+    pod 'Quick'
+    pod 'Nimble'
+    pod 'PactConsumerSwift'
+  end
+end

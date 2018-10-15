@@ -16,15 +16,16 @@ class CatKitClientSpec: QuickSpec {
     override func spec() {
         var catKitService: MockService?
         var catKitClient: CatKitClient?
-        
+
         describe("tests fulfilling all expected interactions") {
             beforeEach {
                 catKitService = MockService(provider: "CatKit Service", consumer: "CatKit iOS App")
                 catKitClient = CatKitClient(baseUrl: catKitService!.baseUrl)
             }
-            
+
             it("it feeds my cat") {
-                catKitService!.uponReceiving("a request for feeding")
+                catKitService!.given("We are stocked with cat food")
+                    .uponReceiving("a request for feeding")
                     .withRequest(
                         method: .GET,
                         path: "/feed-me",
@@ -33,7 +34,7 @@ class CatKitClientSpec: QuickSpec {
                         status: 200,
                         headers: ["Content-Type": "application/json"],
                         body: [ "message": "Meow!", "status": "happy"])
-                
+
                 //Run the tests
                 catKitService!.run { (testComplete) -> Void in
                     // Test the client
@@ -44,7 +45,7 @@ class CatKitClientSpec: QuickSpec {
                     }
                 }
             }
-            
+
             it("400 is returned when there is no food") {
                 catKitService!.given("We are out of cat food")
                     .uponReceiving("a request for feeding")
@@ -56,7 +57,7 @@ class CatKitClientSpec: QuickSpec {
                         status: 400,
                         headers: ["Content-Type": "application/json"],
                         body: [ "message": "Out of food dude", "status": "grumpy"])
-                
+
                 //Run the tests
                 catKitService!.run { (testComplete) -> Void in
                     // Test the client

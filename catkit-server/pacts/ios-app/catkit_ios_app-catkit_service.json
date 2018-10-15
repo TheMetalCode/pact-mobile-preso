@@ -8,6 +8,7 @@
   "interactions": [
     {
       "description": "a request for feeding",
+      "providerState": "We are stocked with cat food",
       "request": {
         "method": "get",
         "path": "/feed-me",
@@ -28,7 +29,7 @@
     },
     {
       "description": "a request for feeding",
-      "provider_state": "We are out of cat food",
+      "providerState": "We are out of cat food",
       "request": {
         "method": "get",
         "path": "/feed-me",
@@ -49,6 +50,8 @@
     }
   ],
   "metadata": {
-    "pactSpecificationVersion": "2.0.0"
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
   }
 }
